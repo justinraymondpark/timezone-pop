@@ -40,7 +40,7 @@ If the Chrome Web Store or AMO reviewer asks — paste these verbatim.
 
 ## Privacy policy URL
 
-Host `PRIVACY.md` at a stable URL (e.g. a GitHub Pages site, a section of thecollectedworks.com, or the repo's raw view) and paste that URL into the Privacy tab of each store listing.
+Host `PRIVACY.md` at a stable URL (e.g. a GitHub Pages site or the repo's raw view) and paste that URL into the Privacy tab of each store listing.
 
 ## Single purpose (Chrome Web Store requires this)
 

@@ -23,4 +23,4 @@ Timezone Pop is a browser extension that converts a time across timezones. It is
 
 ## Contact
 
-Questions or concerns: studio@thecollectedworks.com
+Questions or concerns: _contact email to be added before submission._

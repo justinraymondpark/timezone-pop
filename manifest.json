@@ -23,7 +23,7 @@
   "permissions": ["storage", "activeTab", "scripting"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "timezonepop@thecollectedworks.com",
+      "id": "{74c2761b-dc49-4648-9043-148c9f178014}",
       "strict_min_version": "115.0"
     }
   }
