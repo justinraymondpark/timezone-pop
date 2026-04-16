@@ -1,4 +1,4 @@
-# TimezoneBuddy
+# Timezone Pop
 
 A tiny browser extension that converts a time across your favorite timezones. Type `5pm ET`, `17:00 GMT`, `9:30am Irish` — get a neat list of the equivalent times in New York, London, Tokyo, and wherever else you work. Click any row to copy a pasteable string like `5pm ET / 2pm PT`.
 
@@ -33,7 +33,7 @@ Firefox:
 
 ## Usage
 
-Click the TimezoneBuddy icon (or pin it to the toolbar). Type a time. The popup instantly shows the equivalents in each of your target zones.
+Click the Timezone Pop icon (or pin it to the toolbar). Type a time. The popup instantly shows the equivalents in each of your target zones.
 
 Input examples:
 
@@ -95,7 +95,7 @@ python3 make_icons.py
 To produce a submission zip:
 
 ```bash
-zip -r timezonebuddy-0.1.0.zip . \
+zip -r timezone-pop-0.1.0.zip . \
   -x '*.DS_Store' '__pycache__/*' '*.pyc' 'make_icons.py' \
      '.git/*' '*.zip' 'README.md' 'PRIVACY.md' 'LICENSE'
 ```

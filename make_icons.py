@@ -1,4 +1,4 @@
-"""Render TimezoneBuddy icon PNGs from icons/greyscale-icon.svg.
+"""Render Timezone Pop icon PNGs from icons/greyscale-icon.svg.
 
 Usage: python3 make_icons.py
 Requires: cairosvg (pip install cairosvg)

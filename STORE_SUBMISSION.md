@@ -8,7 +8,7 @@ Copy/paste fodder for the Chrome Web Store and Firefox AMO listings.
 
 ## Long description
 
-> TimezoneBuddy is the fastest way to check "what time is that for me?"
+> Timezone Pop is the fastest way to check "what time is that for me?"
 >
 > Type a time like 5pm ET, 17:00 GMT, or 9:30am Irish, and instantly see the equivalent in each of your saved target zones. Click any row to copy a ready-to-paste string like "5pm ET / 2pm PT" into an email or calendar invite.
 >
@@ -67,8 +67,8 @@ Host `PRIVACY.md` at a stable URL (e.g. a GitHub Pages site, a section of thecol
 ## Build the submission zip
 
 ```bash
-cd timezonebuddy
-zip -r ../timezonebuddy-0.1.0.zip . \
+cd timezone-pop
+zip -r ../timezone-pop-0.1.0.zip . \
   -x '*.DS_Store' '__pycache__/*' '*.pyc' 'make_icons.py' \
      '.git/*' '*.zip' 'STORE_SUBMISSION.md'
 ```

@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "TimezoneBuddy",
+  "name": "Timezone Pop",
   "version": "0.1.0",
   "description": "Quickly convert a time across your favorite timezones.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "TimezoneBuddy",
+    "default_title": "Timezone Pop",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -23,7 +23,7 @@
   "permissions": ["storage", "activeTab", "scripting"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "timezonebuddy@thecollectedworks.com",
+      "id": "timezonepop@thecollectedworks.com",
       "strict_min_version": "115.0"
     }
   }
