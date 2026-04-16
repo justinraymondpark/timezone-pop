@@ -1,20 +1,3 @@
-const DEFAULT_SETTINGS = {
-  targets: [
-    { label: 'New York',    zone: 'America/New_York' },
-    { label: 'Chicago',     zone: 'America/Chicago' },
-    { label: 'Denver',      zone: 'America/Denver' },
-    { label: 'Los Angeles', zone: 'America/Los_Angeles' },
-    { label: 'Anchorage',   zone: 'America/Anchorage' },
-    { label: 'Honolulu',    zone: 'Pacific/Honolulu' },
-    { label: 'London',      zone: 'Europe/London' },
-    { label: 'Dublin',      zone: 'Europe/Dublin' },
-    { label: 'Tokyo',       zone: 'Asia/Tokyo' },
-  ],
-  hour12: true,
-  defaultSourceZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  ambiguous: { CST: 'US', IST: 'IN' },
-};
-
 // Get the full IANA zone list if the browser supplies it; otherwise fall back.
 function supportedZones() {
   if (typeof Intl.supportedValuesOf === 'function') {
@@ -36,15 +19,6 @@ function supportedZones() {
 }
 
 let current;
-
-function loadSettings() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(['settings'], (res) => {
-      const s = res && res.settings ? { ...DEFAULT_SETTINGS, ...res.settings } : DEFAULT_SETTINGS;
-      resolve(JSON.parse(JSON.stringify(s)));
-    });
-  });
-}
 
 const COLOR_OPTIONS = [
   { key: '',       name: 'Auto' },
@@ -205,7 +179,7 @@ function bind() {
 }
 
 async function main() {
-  current = await loadSettings();
+  current = await TZB.loadSettings();
   populateZoneSelects();
   renderTargets();
   document.getElementById('hour12').checked = !!current.hour12;

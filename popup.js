@@ -1,32 +1,3 @@
-const DEFAULT_SETTINGS = {
-  targets: [
-    { label: 'New York',    zone: 'America/New_York' },
-    { label: 'Chicago',     zone: 'America/Chicago' },
-    { label: 'Denver',      zone: 'America/Denver' },
-    { label: 'Los Angeles', zone: 'America/Los_Angeles' },
-    { label: 'Anchorage',   zone: 'America/Anchorage' },
-    { label: 'Honolulu',    zone: 'Pacific/Honolulu' },
-    { label: 'London',      zone: 'Europe/London' },
-    { label: 'Dublin',      zone: 'Europe/Dublin' },
-    { label: 'Tokyo',       zone: 'Asia/Tokyo' },
-  ],
-  hour12: true,
-  defaultSourceZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  ambiguous: { CST: 'US', IST: 'IN' },
-};
-
-function loadSettings() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(['settings'], (res) => {
-      const s = res && res.settings ? { ...DEFAULT_SETTINGS, ...res.settings } : { ...DEFAULT_SETTINGS };
-      const home = (s.targets || []).find(t => t.isHome);
-      if (home) s.defaultSourceZone = home.zone;
-      else if (!s.defaultSourceZone) s.defaultSourceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      resolve(s);
-    });
-  });
-}
-
 function collectContextInPage() {
   try {
     const sel = window.getSelection && window.getSelection().toString();
@@ -172,7 +143,7 @@ function renderFromInput(settings, raw) {
 }
 
 async function main() {
-  const settings = await loadSettings();
+  const settings = await TZB.loadSettings();
   const input = document.getElementById('input');
   render(settings, null);
   input.addEventListener('input', () => renderFromInput(settings, input.value));

@@ -14,6 +14,8 @@ No accounts. No network. No tracking. Everything happens on your device.
 - 12- or 24-hour format.
 - Auto-detects times from your current tab's selection or focused field when you open the popup.
 - Click-to-copy any row.
+- Keyboard shortcut: **Cmd+Shift+Y** (macOS) / **Ctrl+Shift+Y** (Windows/Linux) to open the popup. Remap it at `chrome://extensions/shortcuts` or in Firefox's `about:addons` → gear → _Manage Extension Shortcuts_.
+- Dark mode: respects your system's `prefers-color-scheme`.
 
 ## Install
 

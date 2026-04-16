@@ -130,3 +130,48 @@ select { padding: 4px 6px; border: 1px solid #ccc; border-radius: 5px; }
 .pill.color-pink   { background: #fde1ee; color: #b02e68; }
 .pill.color-gray   { background: #ececec; color: #555; }
 .pill.color-slate  { background: #eef1f5; color: #555; }
+
+@media (prefers-color-scheme: dark) {
+  body { background: #161618; color: #e8e8e8; }
+  .wrap { background: #222225; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+  h2 { color: #9aa0a6; }
+  .hint { color: #9aa0a6; }
+
+  .targets li { background: #2a2a2d; border-color: #3a3a3d; }
+  .target-main .label-input { background: #1e1e20; border-color: #3a3a3d; color: #e8e8e8; }
+  .target-main .label-input:focus { border-color: #6ba4e8; box-shadow: 0 0 0 2px rgba(107,164,232,0.2); }
+  .target-main .actions button { color: #b0b0b0; }
+  .target-main .actions button:hover { background: #3a3a3d; }
+  .target-main .actions button.rm:hover { background: #4e2220; color: #ef6c63; }
+  .target-main .actions button.home { color: #6a6a6a; }
+  .target-main .actions button.home:hover { background: #3d3520; color: #e0b838; }
+  .target-main .actions button.home.active { color: #f0c03a; }
+  .target-main .actions button.home.active:hover { background: #3d3520; }
+
+  .target-meta .mini { color: #9aa0a6; }
+  .target-meta .code-input,
+  .target-meta .color-select { background: #1e1e20; border-color: #3a3a3d; color: #e8e8e8; }
+  .target-meta .code-input::placeholder { color: #6a6a6a; }
+  .target-meta .code-input:focus,
+  .target-meta .color-select:focus { border-color: #6ba4e8; outline: none; }
+  .target-meta .zone { color: #6a6a6a; }
+
+  .addRow input,
+  .addRow select { background: #1e1e20; border-color: #3a3a3d; color: #e8e8e8; }
+  .addRow input:focus,
+  .addRow select:focus { border-color: #6ba4e8; outline: none; }
+  .addRow button, #saveBtn { background: #4a90e2; }
+  .addRow button:hover, #saveBtn:hover { background: #6ba4e8; }
+
+  #status { color: #5ecc7f; }
+
+  .pill.color-blue   { background: #1a3352; color: #8ab8ee; }
+  .pill.color-purple { background: #342255; color: #c2a5ed; }
+  .pill.color-orange { background: #54351a; color: #e3a567; }
+  .pill.color-red    { background: #52221f; color: #ed9a94; }
+  .pill.color-green  { background: #1a3f2a; color: #7fd69c; }
+  .pill.color-teal   { background: #164540; color: #7ad2c5; }
+  .pill.color-pink   { background: #4e2240; color: #e896c0; }
+  .pill.color-gray   { background: #353535; color: #c0c0c0; }
+  .pill.color-slate  { background: #2e3540; color: #b8c0d0; }
+}

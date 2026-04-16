@@ -165,6 +165,40 @@ function abbrFor(instant, zone, settings) {
   return zoneAbbrForInstant(instant, zone);
 }
 
+const DEFAULT_SETTINGS = {
+  targets: [
+    { label: 'New York',    zone: 'America/New_York' },
+    { label: 'Chicago',     zone: 'America/Chicago' },
+    { label: 'Denver',      zone: 'America/Denver' },
+    { label: 'Los Angeles', zone: 'America/Los_Angeles' },
+    { label: 'Anchorage',   zone: 'America/Anchorage' },
+    { label: 'Honolulu',    zone: 'Pacific/Honolulu' },
+    { label: 'London',      zone: 'Europe/London' },
+    { label: 'Dublin',      zone: 'Europe/Dublin' },
+    { label: 'Tokyo',       zone: 'Asia/Tokyo' },
+  ],
+  hour12: true,
+  ambiguous: { CST: 'US', IST: 'IN' },
+};
+
+function loadSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['settings'], (res) => {
+      const saved = (res && res.settings) || {};
+      const targets = Array.isArray(saved.targets) ? saved.targets : DEFAULT_SETTINGS.targets;
+      const s = {
+        ...DEFAULT_SETTINGS,
+        ...saved,
+        targets: JSON.parse(JSON.stringify(targets)),
+        ambiguous: { ...DEFAULT_SETTINGS.ambiguous, ...(saved.ambiguous || {}) },
+      };
+      const home = s.targets.find(t => t.isHome);
+      s.defaultSourceZone = home ? home.zone : Intl.DateTimeFormat().resolvedOptions().timeZone;
+      resolve(s);
+    });
+  });
+}
+
 // Exported via global for popup.js / options.js
 window.TZB = {
   ZONE_MAP, AMBIGUOUS,
@@ -172,4 +206,5 @@ window.TZB = {
   wallClockToInstant, formatInZone, compactTime, zoneAbbrForInstant,
   regionOfZone, DEFAULT_ABBRS, abbrFor,
   REGION_COLOR, COLOR_KEYS, colorKeyFor,
+  DEFAULT_SETTINGS, loadSettings,
 };

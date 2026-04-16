@@ -88,3 +88,32 @@ body {
 .footer a { color: #4a90e2; text-decoration: none; }
 .footer a:hover { text-decoration: underline; }
 .empty { color: #888; font-size: 12px; padding: 10px 2px; }
+
+@media (prefers-color-scheme: dark) {
+  body { background: #1e1e1e; color: #e8e8e8; }
+  #input { background: #2a2a2a; color: #e8e8e8; border-color: #3d3d3d; }
+  #input:focus { border-color: #6ba4e8; box-shadow: 0 0 0 2px rgba(107,164,232,0.2); }
+  .source { color: #9aa0a6; }
+  .source.error { color: #ef6c63; }
+  .results { border-top-color: #2d2d2d; }
+  .row { border-bottom-color: #2a2a2a; }
+  .row:hover { background: #2a2a2a; }
+  .row.copied { background: #1b3a25; }
+  .pair { color: #d0d0d0; }
+  .pair .sep { color: #555; }
+  .pair .same { color: #aaa; }
+  .copied-label { color: #5ecc7f; }
+
+  .pill.color-blue   { background: #1a3352; color: #8ab8ee; }
+  .pill.color-purple { background: #342255; color: #c2a5ed; }
+  .pill.color-orange { background: #54351a; color: #e3a567; }
+  .pill.color-red    { background: #52221f; color: #ed9a94; }
+  .pill.color-green  { background: #1a3f2a; color: #7fd69c; }
+  .pill.color-teal   { background: #164540; color: #7ad2c5; }
+  .pill.color-pink   { background: #4e2240; color: #e896c0; }
+  .pill.color-gray   { background: #353535; color: #c0c0c0; }
+  .pill.color-slate  { background: #2e3540; color: #b8c0d0; }
+
+  .footer a { color: #6ba4e8; }
+  .empty { color: #888; }
+}
