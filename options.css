@@ -1,0 +1,132 @@
+body {
+  font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+  background: #f7f7f8;
+  margin: 0;
+}
+.wrap { max-width: 640px; margin: 30px auto; padding: 24px; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+h1 { margin: 0 0 16px; font-size: 20px; }
+h2 { margin: 20px 0 8px; font-size: 14px; color: #555; font-weight: 600; }
+section { margin-bottom: 18px; }
+.hint { color: #777; font-size: 12px; margin: 0 0 8px; }
+
+.targets { list-style: none; padding: 0; margin: 0 0 10px; }
+.targets li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.target-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.target-main .pill { flex-shrink: 0; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.target-main .label-input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-weight: 500;
+  padding: 6px 10px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  border-radius: 5px;
+}
+.target-main .label-input:focus { border-color: #4a90e2; outline: none; box-shadow: 0 0 0 2px rgba(74,144,226,0.15); }
+.target-main .actions { display: flex; gap: 2px; flex-shrink: 0; }
+.target-main .actions button {
+  background: transparent; border: 1px solid transparent; border-radius: 4px;
+  width: 26px; height: 26px; cursor: pointer; color: #666; font-size: 14px;
+}
+.target-main .actions button:hover { background: #f0f0f0; }
+.target-main .actions button.rm:hover { background: #fdecea; color: #c0392b; }
+.target-main .actions button.home { color: #bbb; font-size: 16px; line-height: 1; }
+.target-main .actions button.home:hover { background: #fff6d6; color: #c89a1a; }
+.target-main .actions button.home.active { color: #e0a800; }
+.target-main .actions button.home.active:hover { background: #fff6d6; }
+
+.target-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 2px;
+}
+.target-meta .mini {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;
+}
+.target-meta .code-input {
+  width: 80px;
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  border-radius: 4px;
+  text-align: center;
+  color: #333;
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+.target-meta .code-input::placeholder { color: #aaa; font-weight: 500; }
+.target-meta .code-input:focus { border-color: #4a90e2; outline: none; }
+.target-meta .color-select {
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.target-meta .zone {
+  margin-left: auto;
+  font-size: 11px;
+  color: #999;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.addRow { display: flex; gap: 6px; margin-top: 10px; }
+.addRow input, .addRow select { flex: 1; padding: 6px 8px; border: 1px solid #ccc; border-radius: 5px; font: inherit; }
+.addRow button, #saveBtn { padding: 6px 14px; background: #4a90e2; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: 500; }
+.addRow button:hover, #saveBtn:hover { background: #357ab8; }
+
+label { display: block; margin: 6px 0; }
+select { padding: 4px 6px; border: 1px solid #ccc; border-radius: 5px; }
+.save { margin-top: 24px; display: flex; align-items: center; gap: 12px; }
+#status { color: #27ae60; font-size: 12px; }
+
+/* Pill preview (matches popup) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.pill .pill-abbr {
+  opacity: 0.75;
+  margin-left: 6px;
+  font-weight: 500;
+}
+.pill.color-blue   { background: #e3efff; color: #1e5fbf; }
+.pill.color-purple { background: #efe5fb; color: #6c2dc7; }
+.pill.color-orange { background: #fdecd9; color: #b5651a; }
+.pill.color-red    { background: #fde0de; color: #b83227; }
+.pill.color-green  { background: #ddf4e4; color: #1e8449; }
+.pill.color-teal   { background: #d6f1ee; color: #0e7c6f; }
+.pill.color-pink   { background: #fde1ee; color: #b02e68; }
+.pill.color-gray   { background: #ececec; color: #555; }
+.pill.color-slate  { background: #eef1f5; color: #555; }

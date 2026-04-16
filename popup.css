@@ -1,0 +1,90 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  width: 360px;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+}
+.app { padding: 12px; }
+#input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  outline: none;
+}
+#input:focus { border-color: #4a90e2; box-shadow: 0 0 0 2px rgba(74,144,226,0.15); }
+.source {
+  font-size: 11px;
+  color: #777;
+  margin: 8px 2px 6px;
+  min-height: 14px;
+}
+.source.error { color: #c0392b; }
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #eee;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 4px;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.1s;
+}
+.row:hover { background: #fafbfc; }
+.row.copied { background: #e8f5e9; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pill .pill-abbr {
+  opacity: 0.75;
+  margin-left: 6px;
+  font-weight: 500;
+}
+.pair {
+  flex: 1;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: #333;
+}
+.pair .sep { color: #bbb; margin: 0 4px; }
+.pair .same { color: #555; }
+.copied-label { color: #27ae60; font-weight: 500; font-size: 12px; }
+
+/* Color palette */
+.pill.color-blue   { background: #e3efff; color: #1e5fbf; }
+.pill.color-purple { background: #efe5fb; color: #6c2dc7; }
+.pill.color-orange { background: #fdecd9; color: #b5651a; }
+.pill.color-red    { background: #fde0de; color: #b83227; }
+.pill.color-green  { background: #ddf4e4; color: #1e8449; }
+.pill.color-teal   { background: #d6f1ee; color: #0e7c6f; }
+.pill.color-pink   { background: #fde1ee; color: #b02e68; }
+.pill.color-gray   { background: #ececec; color: #555; }
+.pill.color-slate  { background: #eef1f5; color: #555; }
+
+.footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.footer a { color: #4a90e2; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.empty { color: #888; font-size: 12px; padding: 10px 2px; }

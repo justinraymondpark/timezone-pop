@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TimezoneBuddy Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="wrap">
+    <h1>TimezoneBuddy Settings</h1>
+
+    <section>
+      <h2>Target zones</h2>
+      <p class="hint">Shown in the popup, in order. Click the star (☆) to mark your home zone — it's the source when you type a time without specifying one. If none is marked, your system zone is used.</p>
+      <ul id="targets" class="targets"></ul>
+      <div class="addRow">
+        <input id="newLabel" placeholder="Label (e.g. Tokyo)">
+        <select id="newZone"></select>
+        <button id="addBtn">Add</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Format</h2>
+      <label><input type="checkbox" id="hour12"> Use 12-hour time (AM/PM)</label>
+    </section>
+
+    <section>
+      <h2>Ambiguous abbreviations</h2>
+      <label>CST means:
+        <select id="amb-CST">
+          <option value="US">US Central (America/Chicago)</option>
+          <option value="CN">China Standard (Asia/Shanghai)</option>
+        </select>
+      </label>
+      <label>IST means:
+        <select id="amb-IST">
+          <option value="IN">India (Asia/Kolkata)</option>
+          <option value="IE">Ireland (Europe/Dublin)</option>
+          <option value="IL">Israel (Asia/Jerusalem)</option>
+        </select>
+      </label>
+    </section>
+
+    <div class="save">
+      <button id="saveBtn">Save</button>
+      <span id="status"></span>
+    </div>
+  </div>
+
+  <script src="tz.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
