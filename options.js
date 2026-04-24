@@ -44,16 +44,17 @@ function effectiveAbbr(t) {
 function updatePillPreview(pill, t) {
   const colorKey = effectiveColor(t);
   pill.className = `pill color-${colorKey}`;
-  pill.innerHTML = `${escapeHtml(t.label || t.zone)}<span class="pill-abbr">${escapeHtml(effectiveAbbr(t))}</span>`;
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]);
+  pill.textContent = '';
+  pill.appendChild(document.createTextNode(t.label || t.zone));
+  const abbrSpan = document.createElement('span');
+  abbrSpan.className = 'pill-abbr';
+  abbrSpan.textContent = effectiveAbbr(t);
+  pill.appendChild(abbrSpan);
 }
 
 function renderTargets() {
   const ul = document.getElementById('targets');
-  ul.innerHTML = '';
+  ul.replaceChildren();
   current.targets.forEach((t, i) => {
     const li = document.createElement('li');
 
@@ -146,7 +147,7 @@ function renderTargets() {
 function populateZoneSelects() {
   const zones = supportedZones();
   const sel = document.getElementById('newZone');
-  sel.innerHTML = '';
+  sel.replaceChildren();
   for (const z of zones) {
     const opt = document.createElement('option');
     opt.value = z; opt.textContent = z;

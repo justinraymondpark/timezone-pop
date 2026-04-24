@@ -31,8 +31,15 @@ async function grabFromActiveTab() {
   } catch (_) { return null; }
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]);
+function buildPill(className, labelText, abbrText) {
+  const pill = document.createElement('span');
+  pill.className = className;
+  pill.appendChild(document.createTextNode(labelText));
+  const abbrSpan = document.createElement('span');
+  abbrSpan.className = 'pill-abbr';
+  abbrSpan.textContent = abbrText;
+  pill.appendChild(abbrSpan);
+  return pill;
 }
 
 function makeRow({ label, zone, abbrOverride, color, instant, sourceZone, hour12, showAmPm, settings }) {
@@ -46,18 +53,26 @@ function makeRow({ label, zone, abbrOverride, color, instant, sourceZone, hour12
   const li = document.createElement('li');
   li.className = `row color-${colorKey}`;
 
-  const pill = document.createElement('span');
-  pill.className = `pill color-${colorKey}`;
-  pill.innerHTML = `${escapeHtml(label)}<span class="pill-abbr">${escapeHtml(abbr)}</span>`;
+  const pill = buildPill(`pill color-${colorKey}`, label, abbr);
 
   const pair = document.createElement('span');
   pair.className = 'pair';
   let copyText;
   if (sameZone) {
-    pair.innerHTML = `<span class="same">${rowTime} ${abbr}</span>`;
+    const same = document.createElement('span');
+    same.className = 'same';
+    same.textContent = `${rowTime} ${abbr}`;
+    pair.appendChild(same);
     copyText = `${rowTime} ${abbr}`;
   } else {
-    pair.innerHTML = `${srcTime} ${srcAbbr}<span class="sep">/</span>${rowTime} ${abbr}`;
+    const sep = document.createElement('span');
+    sep.className = 'sep';
+    sep.textContent = '/';
+    pair.append(
+      document.createTextNode(`${srcTime} ${srcAbbr}`),
+      sep,
+      document.createTextNode(`${rowTime} ${abbr}`)
+    );
     copyText = `${srcTime} ${srcAbbr} / ${rowTime} ${abbr}`;
   }
 
@@ -71,10 +86,14 @@ function makeRow({ label, zone, abbrOverride, color, instant, sourceZone, hour12
 async function copyRow(li, pair, text) {
   try {
     await navigator.clipboard.writeText(text);
-    const original = pair.innerHTML;
-    pair.innerHTML = `<span class="copied-label">Copied!</span>`;
+    const saved = [...pair.childNodes].map(n => n.cloneNode(true));
+    pair.textContent = '';
+    const label = document.createElement('span');
+    label.className = 'copied-label';
+    label.textContent = 'Copied!';
+    pair.appendChild(label);
     li.classList.add('copied');
-    setTimeout(() => { pair.innerHTML = original; li.classList.remove('copied'); }, 900);
+    setTimeout(() => { pair.textContent = ''; saved.forEach(n => pair.appendChild(n)); li.classList.remove('copied'); }, 900);
   } catch (e) {
     pair.textContent = 'Copy failed';
   }
@@ -83,7 +102,7 @@ async function copyRow(li, pair, text) {
 function render(settings, parsed) {
   const sourceLine = document.getElementById('sourceLine');
   const results = document.getElementById('results');
-  results.innerHTML = '';
+  results.replaceChildren();
 
   const now = new Date();
   let instant, sourceZone;
@@ -139,7 +158,7 @@ function renderFromInput(settings, raw) {
     const sourceLine = document.getElementById('sourceLine');
     sourceLine.classList.add('error');
     sourceLine.textContent = `Couldn't parse "${raw}".`;
-    document.getElementById('results').innerHTML = '';
+    document.getElementById('results').replaceChildren();
     return;
   }
   render(settings, parsed);
