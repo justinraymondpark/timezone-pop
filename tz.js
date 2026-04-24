@@ -92,7 +92,9 @@ function formatInZone(instant, tz, { hour12 = true } = {}) {
 
 // Compact form: drops ":00" when minutes are zero, lowercase am/pm.
 // e.g. "3pm", "3:30pm", "15:00", "15:30".
-function compactTime(instant, tz, hour12 = true) {
+// When showAmPm is false (input didn't specify am/pm), the suffix is omitted
+// so "1 PST / 4 ET" stays neutral — the offset is the same either way.
+function compactTime(instant, tz, hour12 = true, showAmPm = true) {
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone: tz, hour: 'numeric', minute: '2-digit', hour12,
   }).formatToParts(instant);
@@ -100,7 +102,7 @@ function compactTime(instant, tz, hour12 = true) {
   for (const p of parts) o[p.type] = p.value;
   const h = o.hour;
   const m = o.minute;
-  const dp = (o.dayPeriod || '').toLowerCase();
+  const dp = (hour12 && showAmPm) ? (o.dayPeriod || '').toLowerCase() : '';
   if (hour12) return m === '00' ? `${h}${dp}` : `${h}:${m}${dp}`;
   return `${h}:${m}`;
 }

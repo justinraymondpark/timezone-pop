@@ -35,12 +35,12 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]);
 }
 
-function makeRow({ label, zone, abbrOverride, color, instant, sourceZone, hour12, settings }) {
+function makeRow({ label, zone, abbrOverride, color, instant, sourceZone, hour12, showAmPm, settings }) {
   const colorKey = TZB.colorKeyFor({ color }, zone);
   const abbr = TZB.abbrFor(instant, zone, settings);
   const srcAbbr = TZB.abbrFor(instant, sourceZone, settings);
-  const srcTime = TZB.compactTime(instant, sourceZone, hour12);
-  const rowTime = TZB.compactTime(instant, zone, hour12);
+  const srcTime = TZB.compactTime(instant, sourceZone, hour12, showAmPm);
+  const rowTime = TZB.compactTime(instant, zone, hour12, showAmPm);
   const sameZone = zone === sourceZone;
 
   const li = document.createElement('li');
@@ -112,11 +112,14 @@ function render(settings, parsed) {
     );
   }
 
+  const showAmPm = parsed ? parsed.ampmExplicit : true;
+
   for (const t of settings.targets) {
     results.appendChild(makeRow({
       label: t.label, zone: t.zone, color: t.color,
       instant, sourceZone,
       hour12: settings.hour12,
+      showAmPm,
       settings,
     }));
   }
