@@ -1,23 +1,86 @@
-// Timezone abbreviation → IANA zone.
+// Timezone abbreviation / city / region name → IANA zone.
+// Keys are matched after uppercasing and stripping spaces/periods,
+// so "p.s.t.", "new york", and "Hong Kong" all resolve.
 // Ambiguous ones (CST, IST) resolve via user's `ambiguous` setting.
 const ZONE_MAP = {
-  UTC: 'UTC', GMT: 'UTC', Z: 'UTC',
+  UTC: 'UTC', GMT: 'UTC', Z: 'UTC', ZULU: 'UTC',
+  // North America
   ET: 'America/New_York', EST: 'America/New_York', EDT: 'America/New_York', EASTERN: 'America/New_York',
+  NYC: 'America/New_York', NY: 'America/New_York', NEWYORK: 'America/New_York',
+  BOSTON: 'America/New_York', MIAMI: 'America/New_York', ATLANTA: 'America/New_York',
+  DC: 'America/New_York', WASHINGTON: 'America/New_York',
+  TORONTO: 'America/Toronto', MONTREAL: 'America/Toronto',
   CT: 'America/Chicago', CDT: 'America/Chicago', CENTRAL: 'America/Chicago',
+  CHICAGO: 'America/Chicago', DALLAS: 'America/Chicago', AUSTIN: 'America/Chicago',
+  HOUSTON: 'America/Chicago', MINNEAPOLIS: 'America/Chicago', NASHVILLE: 'America/Chicago',
   MT: 'America/Denver', MST: 'America/Denver', MDT: 'America/Denver', MOUNTAIN: 'America/Denver',
+  DENVER: 'America/Denver', SALTLAKE: 'America/Denver', SALTLAKECITY: 'America/Denver',
+  PHOENIX: 'America/Phoenix', ARIZONA: 'America/Phoenix',
   PT: 'America/Los_Angeles', PST: 'America/Los_Angeles', PDT: 'America/Los_Angeles', PACIFIC: 'America/Los_Angeles',
+  LA: 'America/Los_Angeles', LOSANGELES: 'America/Los_Angeles',
+  SF: 'America/Los_Angeles', SANFRANCISCO: 'America/Los_Angeles',
+  SEATTLE: 'America/Los_Angeles', PORTLAND: 'America/Los_Angeles', SANDIEGO: 'America/Los_Angeles',
+  VANCOUVER: 'America/Vancouver',
   AKT: 'America/Anchorage', AKST: 'America/Anchorage', AKDT: 'America/Anchorage',
-  HT: 'Pacific/Honolulu', HST: 'Pacific/Honolulu',
+  ALASKA: 'America/Anchorage', ANCHORAGE: 'America/Anchorage',
+  HT: 'Pacific/Honolulu', HST: 'Pacific/Honolulu', HAWAII: 'Pacific/Honolulu', HONOLULU: 'Pacific/Honolulu',
+  AST: 'America/Halifax', ADT: 'America/Halifax', ATLANTIC: 'America/Halifax', HALIFAX: 'America/Halifax',
+  NST: 'America/St_Johns', NDT: 'America/St_Johns',
+  // Latin America
+  MEXICO: 'America/Mexico_City', MEXICOCITY: 'America/Mexico_City', CDMX: 'America/Mexico_City',
+  BOGOTA: 'America/Bogota', COT: 'America/Bogota',
+  LIMA: 'America/Lima', PET: 'America/Lima',
+  SANTIAGO: 'America/Santiago', CLT: 'America/Santiago',
+  BRT: 'America/Sao_Paulo', SAOPAULO: 'America/Sao_Paulo', BRAZIL: 'America/Sao_Paulo',
+  ART: 'America/Argentina/Buenos_Aires', BUENOSAIRES: 'America/Argentina/Buenos_Aires', ARGENTINA: 'America/Argentina/Buenos_Aires',
+  // Europe
   BST: 'Europe/London', WET: 'Europe/London', LONDON: 'Europe/London', UK: 'Europe/London',
   IRISH: 'Europe/Dublin', IRELAND: 'Europe/Dublin', DUBLIN: 'Europe/Dublin',
-  CET: 'Europe/Paris', CEST: 'Europe/Paris', PARIS: 'Europe/Paris', BERLIN: 'Europe/Berlin',
-  EET: 'Europe/Helsinki', EEST: 'Europe/Helsinki',
+  LISBON: 'Europe/Lisbon', PORTUGAL: 'Europe/Lisbon',
+  CET: 'Europe/Paris', CEST: 'Europe/Paris', PARIS: 'Europe/Paris', FRANCE: 'Europe/Paris',
+  BERLIN: 'Europe/Berlin', MUNICH: 'Europe/Berlin', FRANKFURT: 'Europe/Berlin', GERMANY: 'Europe/Berlin',
+  MADRID: 'Europe/Madrid', BARCELONA: 'Europe/Madrid', SPAIN: 'Europe/Madrid',
+  ROME: 'Europe/Rome', MILAN: 'Europe/Rome', ITALY: 'Europe/Rome',
+  AMSTERDAM: 'Europe/Amsterdam', BRUSSELS: 'Europe/Brussels',
+  ZURICH: 'Europe/Zurich', GENEVA: 'Europe/Zurich',
+  VIENNA: 'Europe/Vienna', PRAGUE: 'Europe/Prague', WARSAW: 'Europe/Warsaw',
+  STOCKHOLM: 'Europe/Stockholm', OSLO: 'Europe/Oslo', COPENHAGEN: 'Europe/Copenhagen',
+  EET: 'Europe/Helsinki', EEST: 'Europe/Helsinki', HELSINKI: 'Europe/Helsinki',
+  ATHENS: 'Europe/Athens', BUCHAREST: 'Europe/Bucharest',
+  KYIV: 'Europe/Kyiv', KIEV: 'Europe/Kyiv',
+  ISTANBUL: 'Europe/Istanbul', TRT: 'Europe/Istanbul',
   MSK: 'Europe/Moscow', MOSCOW: 'Europe/Moscow',
-  JST: 'Asia/Tokyo', TOKYO: 'Asia/Tokyo', KST: 'Asia/Seoul', SEOUL: 'Asia/Seoul',
-  SGT: 'Asia/Singapore', SINGAPORE: 'Asia/Singapore', HKT: 'Asia/Hong_Kong', HONGKONG: 'Asia/Hong_Kong',
-  AEST: 'Australia/Sydney', AEDT: 'Australia/Sydney', SYDNEY: 'Australia/Sydney',
-  AWST: 'Australia/Perth', ACST: 'Australia/Adelaide', ACDT: 'Australia/Adelaide',
+  // Africa
+  LAGOS: 'Africa/Lagos', WAT: 'Africa/Lagos',
+  CAIRO: 'Africa/Cairo',
+  JOHANNESBURG: 'Africa/Johannesburg', JOBURG: 'Africa/Johannesburg', CAPETOWN: 'Africa/Johannesburg', SAST: 'Africa/Johannesburg',
+  NAIROBI: 'Africa/Nairobi', EAT: 'Africa/Nairobi',
+  // Middle East / Asia
+  ISRAEL: 'Asia/Jerusalem', TELAVIV: 'Asia/Jerusalem', JERUSALEM: 'Asia/Jerusalem',
+  GST: 'Asia/Dubai', DUBAI: 'Asia/Dubai', UAE: 'Asia/Dubai', ABUDHABI: 'Asia/Dubai',
+  PKT: 'Asia/Karachi', KARACHI: 'Asia/Karachi', PAKISTAN: 'Asia/Karachi',
+  INDIA: 'Asia/Kolkata', DELHI: 'Asia/Kolkata', NEWDELHI: 'Asia/Kolkata',
+  MUMBAI: 'Asia/Kolkata', BANGALORE: 'Asia/Kolkata', BENGALURU: 'Asia/Kolkata',
+  HYDERABAD: 'Asia/Kolkata', CHENNAI: 'Asia/Kolkata', PUNE: 'Asia/Kolkata', KOLKATA: 'Asia/Kolkata',
+  DHAKA: 'Asia/Dhaka', BANGLADESH: 'Asia/Dhaka',
+  ICT: 'Asia/Bangkok', BANGKOK: 'Asia/Bangkok', THAILAND: 'Asia/Bangkok',
+  WIB: 'Asia/Jakarta', JAKARTA: 'Asia/Jakarta',
+  VIETNAM: 'Asia/Ho_Chi_Minh', HANOI: 'Asia/Ho_Chi_Minh', SAIGON: 'Asia/Ho_Chi_Minh', HOCHIMINH: 'Asia/Ho_Chi_Minh',
+  MYT: 'Asia/Kuala_Lumpur', KUALALUMPUR: 'Asia/Kuala_Lumpur', KL: 'Asia/Kuala_Lumpur', MALAYSIA: 'Asia/Kuala_Lumpur',
+  SGT: 'Asia/Singapore', SINGAPORE: 'Asia/Singapore', SG: 'Asia/Singapore',
+  HKT: 'Asia/Hong_Kong', HONGKONG: 'Asia/Hong_Kong', HK: 'Asia/Hong_Kong',
+  CHINA: 'Asia/Shanghai', BEIJING: 'Asia/Shanghai', SHANGHAI: 'Asia/Shanghai', SHENZHEN: 'Asia/Shanghai',
+  TAIPEI: 'Asia/Taipei', TAIWAN: 'Asia/Taipei',
+  PHT: 'Asia/Manila', MANILA: 'Asia/Manila', PHILIPPINES: 'Asia/Manila',
+  JST: 'Asia/Tokyo', TOKYO: 'Asia/Tokyo', OSAKA: 'Asia/Tokyo', JAPAN: 'Asia/Tokyo',
+  KST: 'Asia/Seoul', SEOUL: 'Asia/Seoul', KOREA: 'Asia/Seoul',
+  // Oceania
+  AEST: 'Australia/Sydney', AEDT: 'Australia/Sydney', SYDNEY: 'Australia/Sydney', CANBERRA: 'Australia/Sydney',
+  MELBOURNE: 'Australia/Melbourne', BRISBANE: 'Australia/Brisbane',
+  AWST: 'Australia/Perth', PERTH: 'Australia/Perth',
+  ACST: 'Australia/Adelaide', ACDT: 'Australia/Adelaide', ADELAIDE: 'Australia/Adelaide', DARWIN: 'Australia/Darwin',
   NZST: 'Pacific/Auckland', NZDT: 'Pacific/Auckland', AUCKLAND: 'Pacific/Auckland',
+  NZ: 'Pacific/Auckland', WELLINGTON: 'Pacific/Auckland', NEWZEALAND: 'Pacific/Auckland',
 };
 
 const AMBIGUOUS = {
@@ -27,39 +90,134 @@ const AMBIGUOUS = {
 
 function resolveZone(token, ambiguousPrefs) {
   if (!token) return null;
-  const key = token.toUpperCase().replace(/\s+/g, '');
+  let key = token.trim().toUpperCase().replace(/\./g, '');
+  key = key.replace(/^IN\s+/, '');
+  // UTC offsets: "utc+2", "GMT-5:30", "+0530", "utc +7"
+  const om = key.match(/^(?:UTC|GMT)?\s*([+-])\s*(\d{1,2})(?::?([0-5]\d))?$/);
+  if (om) {
+    const hh = parseInt(om[2], 10);
+    if (hh <= 14) return `${om[1]}${String(hh).padStart(2, '0')}:${om[3] || '00'}`;
+  }
+  key = key.replace(/\s+/g, '').replace(/(?:STANDARD|DAYLIGHT|SUMMER)?TIME$/, '');
   if (AMBIGUOUS[key]) {
     const pref = (ambiguousPrefs && ambiguousPrefs[key]) || Object.keys(AMBIGUOUS[key])[0];
     return AMBIGUOUS[key][pref] || Object.values(AMBIGUOUS[key])[0];
   }
-  return ZONE_MAP[key] || null;
+  if (ZONE_MAP[key]) return ZONE_MAP[key];
+  // Raw IANA names typed directly, e.g. "America/New_York"
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone: token.trim() });
+    return token.trim();
+  } catch (_) {}
+  return null;
 }
 
-// Returns {hour, minute, zoneToken, zoneIANA, raw} or null if nothing recognized.
+// One time atom: "5", "5:30", "5.30", "530", "1730", with optional am/pm/a/p.
+// The lookahead keeps a bare "a"/"p" from eating the first letter of a zone.
+const TIME_ATOM = String.raw`(\d{1,4})(?:[:.](\d{2}))?\s*(a\.?m\.?|p\.?m\.?|[ap])?(?![A-Za-z])`;
+const RANGE_SEP = String.raw`(?:\s*[-–—~]\s*|\s+(?:to|until|till|thru|through)\s+)`;
+const TIME_FIRST_RE = new RegExp(`^(?:at\\s+)?${TIME_ATOM}(?:${RANGE_SEP}\\s*${TIME_ATOM})?\\s*(.*?)$`, 'i');
+const ZONE_FIRST_RE = new RegExp(`^(.*?)[\\s,]+(?:at\\s+)?${TIME_ATOM}(?:${RANGE_SEP}\\s*${TIME_ATOM})?$`, 'i');
+
+function timeAtom(digits, minutes, meridiem) {
+  let h, m;
+  if (digits.length >= 3) {
+    if (minutes != null) return null;     // "173:30" — nonsense
+    h = parseInt(digits.slice(0, -2), 10); // military / compact: "1730", "530"
+    m = parseInt(digits.slice(-2), 10);
+  } else {
+    h = parseInt(digits, 10);
+    m = minutes != null ? parseInt(minutes, 10) : 0;
+  }
+  if (h > 23 || m > 59) return null;
+  const mer = meridiem ? (meridiem[0].toLowerCase() === 'p' ? 'pm' : 'am') : null;
+  return { h, m, mer };
+}
+
+function applyMeridiem(h, mer) {
+  if (mer === 'pm' && h < 12) return h + 12;
+  if (mer === 'am' && h === 12) return 0;
+  return h;
+}
+
+// Resolve a range's hours when only one side (or neither) has am/pm.
+// "3-5pm" → 3pm-5pm; "11-1pm" → 11am-1pm; "9am-5" → 9am-5pm; "9-5" → 9:00-17:00.
+function resolveRangeHours(start, end) {
+  const mins = (h, m) => h * 60 + m;
+  let sh, eh;
+  if (start.mer && end.mer) {
+    sh = applyMeridiem(start.h, start.mer);
+    eh = applyMeridiem(end.h, end.mer);
+  } else if (!start.mer && end.mer) {
+    eh = applyMeridiem(end.h, end.mer);
+    if (start.h <= 12) {
+      sh = applyMeridiem(start.h, end.mer);
+      if (mins(sh, start.m) >= mins(eh, end.m)) {
+        sh = applyMeridiem(start.h, end.mer === 'pm' ? 'am' : 'pm');
+      }
+    } else sh = start.h;
+  } else if (start.mer && !end.mer) {
+    sh = applyMeridiem(start.h, start.mer);
+    if (end.h <= 12) {
+      eh = applyMeridiem(end.h, start.mer);
+      if (mins(eh, end.m) <= mins(sh, start.m)) {
+        eh = applyMeridiem(end.h, start.mer === 'pm' ? 'am' : 'pm');
+      }
+    } else eh = end.h;
+  } else {
+    sh = start.h;
+    eh = end.h;
+    // "9-5" reads as 9:00-17:00, but "23-1" stays as a cross-midnight range.
+    if (mins(eh, end.m) <= mins(sh, start.m) && eh < 12 && eh + 12 > sh) eh += 12;
+  }
+  return { sh, eh };
+}
+
+// Returns {hour, minute, endHour, endMinute, zoneToken, zoneIANA, ampmExplicit}
+// or null if nothing recognized. endHour/endMinute are null unless a range was given.
 function parseInput(text, ambiguousPrefs) {
   if (!text || !text.trim()) return null;
-  const s = text.trim();
-  // Pattern: optional "at", digits, optional :MM, optional am/pm, optional zone remainder
-  const re = /^\s*(?:at\s+)?(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?\s*(.*?)\s*$/i;
-  const m = s.match(re);
-  if (!m) return null;
-  let hour = parseInt(m[1], 10);
-  const minute = m[2] ? parseInt(m[2], 10) : 0;
-  const ampm = m[3] ? m[3].toLowerCase().replace(/\./g, '') : null;
-  const zoneRaw = m[4] || '';
+  let s = text.trim().replace(/[?!,;]+$/, '').trim();
+  s = s.replace(/\b(?:12\s*)?noon\b/gi, '12:00pm').replace(/\b(?:12\s*)?midnight\b/gi, '12:00am');
 
-  if (isNaN(hour) || hour < 0 || hour > 23) return null;
-  if (minute < 0 || minute > 59) return null;
-  if (ampm === 'pm' && hour < 12) hour += 12;
-  if (ampm === 'am' && hour === 12) hour = 0;
-  if (!ampm && hour > 23) return null;
+  let zoneRaw = '';
+  let m = s.match(TIME_FIRST_RE);
+  let g; // [digits, minutes, meridiem] x2
+  if (m) {
+    g = m.slice(1, 7);
+    zoneRaw = (m[7] || '').trim();
+  } else {
+    // Zone-first: "tokyo 5pm", "ET 9-11am"
+    m = s.match(ZONE_FIRST_RE);
+    if (!m) return null;
+    zoneRaw = (m[1] || '').trim();
+    g = m.slice(2, 8);
+    if (!resolveZone(zoneRaw, ambiguousPrefs)) return null;
+  }
+  zoneRaw = zoneRaw.replace(/^in\s+/i, '').trim();
+
+  const start = timeAtom(g[0], g[1], g[2]);
+  if (!start) return null;
+  const end = g[3] != null ? timeAtom(g[3], g[4], g[5]) : null;
+  if (g[3] != null && !end) return null;
+
+  let hour, endHour = null, endMinute = null;
+  if (end) {
+    const r = resolveRangeHours(start, end);
+    hour = r.sh;
+    endHour = r.eh;
+    endMinute = end.m;
+  } else {
+    hour = applyMeridiem(start.h, start.mer);
+  }
 
   const zoneIANA = zoneRaw ? resolveZone(zoneRaw, ambiguousPrefs) : null;
   return {
-    hour, minute,
+    hour, minute: start.m,
+    endHour, endMinute,
     zoneToken: zoneRaw || null,
     zoneIANA,
-    ampmExplicit: !!ampm,
+    ampmExplicit: !!(start.mer || (end && end.mer)),
   };
 }
 
@@ -105,6 +263,33 @@ function compactTime(instant, tz, hour12 = true, showAmPm = true) {
   const dp = (hour12 && showAmPm) ? (o.dayPeriod || '').toLowerCase() : '';
   if (hour12) return m === '00' ? `${h}${dp}` : `${h}:${m}${dp}`;
   return `${h}:${m}`;
+}
+
+// Range form: "3–5pm", "11:30am–1pm", "15:00–17:00".
+// The start's am/pm is dropped when both ends share a day period.
+function compactRange(startInstant, endInstant, tz, hour12 = true, showAmPm = true) {
+  if (!endInstant) return compactTime(startInstant, tz, hour12, showAmPm);
+  let startShow = showAmPm;
+  if (hour12 && showAmPm) {
+    const dp = (instant) => {
+      const parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', hour12: true }).formatToParts(instant);
+      const p = parts.find(x => x.type === 'dayPeriod');
+      return p ? p.value : '';
+    };
+    if (dp(startInstant) === dp(endInstant)) startShow = false;
+  }
+  return `${compactTime(startInstant, tz, hour12, startShow)}–${compactTime(endInstant, tz, hour12, showAmPm)}`;
+}
+
+// -1, 0, or +1: which calendar day the instant falls on in `zone`
+// relative to the day it falls on in `baseZone`.
+function dayDiff(instant, zone, baseZone) {
+  const fmt = (tz) => new Intl.DateTimeFormat('en-CA', {
+    timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(instant);
+  const a = fmt(zone), b = fmt(baseZone);
+  if (a === b) return 0;
+  return a > b ? 1 : -1;
 }
 
 function regionOfZone(tz) {
@@ -201,11 +386,11 @@ function loadSettings() {
   });
 }
 
-// Exported via global for popup.js / options.js
-window.TZB = {
+// Exported via global for popup.js / options.js (globalThis also works under Node for tests)
+globalThis.TZB = {
   ZONE_MAP, AMBIGUOUS,
   resolveZone, parseInput,
-  wallClockToInstant, formatInZone, compactTime, zoneAbbrForInstant,
+  wallClockToInstant, formatInZone, compactTime, compactRange, dayDiff, zoneAbbrForInstant,
   regionOfZone, DEFAULT_ABBRS, abbrFor,
   REGION_COLOR, COLOR_KEYS, colorKeyFor,
   DEFAULT_SETTINGS, loadSettings,

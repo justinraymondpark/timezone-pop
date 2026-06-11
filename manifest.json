@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Timezone Pop",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Quickly convert a time across your favorite timezones.",
   "action": {
     "default_popup": "popup.html",
